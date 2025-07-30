@@ -67,7 +67,7 @@ def create_driving_style_visualizations(
                 team = get_driver_team(driver)
                 color = TEAM_COLORS.get(team, '#666666')
                 ax2.scatter(pca_result[i, 0], pca_result[i, 1] if pca_result.shape[1] > 1 else 0,
-                            c=color, s=500, alpha=0.8, edgecolors='black', linewidth=2)
+                            c=color, s=500, alpha=0.8, edgecolors='black', linewidth=2, label=driver)
                 ax2.annotate(driver, (pca_result[i, 0], pca_result[i, 1] if pca_result.shape[1] > 1 else 0),
                              xytext=(0, 0), textcoords='offset points',
                              fontweight='bold', fontsize=14, ha='center', va='center')
@@ -85,6 +85,22 @@ def create_driving_style_visualizations(
             ax2.set_title('Driving Style Principal Components\n(Similar drivers cluster together)', 
                           fontweight='bold', fontsize=14)
             ax2.grid(True, alpha=0.3)
+
+            # Add subtle legend on the axes
+            legend_elements = [
+                plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='none', 
+                          markeredgecolor='black', markersize=8, 
+                          label='Drivers (by team color)'),
+                plt.Line2D([0], [0], color='none', 
+                          label='PC1: Main driving style variation'),
+                plt.Line2D([0], [0], color='none', 
+                          label='PC2: Secondary style variation'),
+                plt.Line2D([0], [0], color='none', 
+                          label='Closer points = similar styles')
+            ]
+            ax2.legend(handles=legend_elements, loc='lower left', 
+                      fontsize=8, framealpha=0.7, edgecolor='gray', 
+                      title='Legend', title_fontsize=9)
         except Exception as e:
             ax2.text(0.5, 0.5, f'PCA Error: {str(e)}', ha='center', va='center', transform=ax2.transAxes)
     else:
