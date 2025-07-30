@@ -2,6 +2,7 @@ telemetry-data
 cache
 f1venv
 playgrounds
+new_telemetry
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
